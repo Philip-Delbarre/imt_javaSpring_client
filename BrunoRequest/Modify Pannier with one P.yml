@@ -1,0 +1,20 @@
+info:
+  name: Modify Pannier with one P
+  type: http
+
+http:
+  method: PUT
+  url: http://localhost:8080/api/client/1/produits/1
+  body:
+    type: json
+    data: |-
+      {
+        
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

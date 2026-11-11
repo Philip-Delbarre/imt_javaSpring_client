@@ -1,0 +1,23 @@
+info:
+  name: post produits
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:8081/api/produits
+  body:
+    type: json
+    data: |-
+      {
+       "nomProduit": "sabre lazer",
+      "designation": "the best in the world",
+       "prixUnitaire": 11111
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
