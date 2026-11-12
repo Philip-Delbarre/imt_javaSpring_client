@@ -66,9 +66,7 @@ public class ClientPresentation {
 
     Client cree = clientServicePort.creerClient(client);
 
-    URI location = uriInfo.getAbsolutePathBuilder()
-            .path(String.valueOf(cree.getIdClient()))
-            .build();
+    URI location = uriInfo.getAbsolutePathBuilder().path(String.valueOf(cree.getIdClient())).build();
 
     ResponseRequestDTO resultat = new ResponseRequestDTO("Client " + cree.getIdClient() + " créé",versDto(cree));
 
@@ -81,13 +79,10 @@ public class ClientPresentation {
     public Response modifierClient(@PathParam("id") int id, CreationClientDTO clientDTO, @Context UriInfo uriInfo) {
         verifierCorps(clientDTO);
         //return versDto(clientServicePort.modifierClient(id, mapper.toDomain(clientDTO)));
-
         Client modifie = clientServicePort.modifierClient(id, mapper.toDomain(clientDTO));
         URI location = uriInfo.getAbsolutePathBuilder().path(String.valueOf(modifie.getIdClient())).build();
-
         ResponseRequestDTO resultat = new ResponseRequestDTO("Client " + modifie.getIdClient() + " modifié",versDto(modifie));
-
-        return Response.created(location).entity(resultat).type(MediaType.APPLICATION_JSON).build();
+    return Response.created(location).entity(resultat).type(MediaType.APPLICATION_JSON).build();
 
     }
 

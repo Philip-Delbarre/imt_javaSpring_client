@@ -54,7 +54,7 @@ void testMapperOk() {
     // tester une levée d'exception
     @Test
     void testGetClientInconnu() {
-        ResponseEntity<String> reponse = restTemplate.getForEntity("http://localhost:" + port + "/api/clients/9999", String.class);
+        ResponseEntity<String> reponse = restTemplate.getForEntity("http://localhost:" + port + "/api/client/9999", String.class);
         assertEquals(HttpStatus.NOT_FOUND, reponse.getStatusCode());
         assertTrue(reponse.getBody().contains("Client 9999 introuvable"));
     }

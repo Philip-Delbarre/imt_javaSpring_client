@@ -67,7 +67,8 @@ public class ClientService implements ClientServicePort {
         consulterClient(idClient);
         clientRepositoryPort.deleteById(idClient);
     }
-
+// on ajoute un produit à un clinet en passant par l'intarface produit port. l'implémentation 
+// de cette interface est faite dans Adpter / out ProduitApdapter.
     @Override
     public Client ajouterProduit(int idClient, int idProduit) {
     Client client = consulterClient(idClient);
@@ -75,15 +76,14 @@ public class ClientService implements ClientServicePort {
         if (statutString[0].equals(client.getEtatPanier())) {
             throw new BadRequestException( "Impossible d'ajouter un produit : Le panier est validé");
         }
-        else if (produitPort.findByIds(List.of(idProduit)).isEmpty()) {
+        else if (produitPort.findByIds(List.of(idProduit)).isEmpty()) {// retourne une liste meme avec un singleton!
             throw new ResourceNotFoundException("le Produit N°: " + idProduit + " introuvable");
             }
         client.addProduit(idProduit);
         if (client.getEtatPanier() == null ||  client.getEtatPanier() == "") {
             client.setEtatPanier(statutString[1]);
             }
-
-            return clientRepositoryPort.save(client);
+         return clientRepositoryPort.save(client);
     }
 
     @Override
@@ -107,18 +107,18 @@ public class ClientService implements ClientServicePort {
         if (idProduits.isEmpty()) {
             return;
         }
-        Set<Integer> trouves = new HashSet<>();
+        Set<Integer> found = new HashSet<>();
         for (ProduitInfo produit : produitPort.findByIds(idProduits)) {
-            trouves.add(produit.getIdProduit());
+            found.add(produit.getIdProduit());
         }
-        List<Integer> manquants = new ArrayList<>();
+        List<Integer> missing = new ArrayList<>();
         for (Integer id : idProduits) {
-            if (!trouves.contains(id)) {
-                manquants.add(id);
+            if (!found.contains(id)) {
+                missing.add(id);
             }
         }
-       if (!manquants.isEmpty()) {
-            throw new BadRequestException("Produit(s) inexistant(s) : " + manquants);
+       if (!missing.isEmpty()) {
+            throw new BadRequestException("Produit(s) inexistant(s) : " + missing);
         }
     }
 }
